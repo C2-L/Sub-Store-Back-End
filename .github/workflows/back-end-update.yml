@@ -1,0 +1,39 @@
+name: Sub-Store Back-End Update
+
+on:
+  schedule:
+    - cron: '0 4 * * 0,1'
+  workflow_dispatch:
+
+jobs:
+  update_filters:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the current repository code
+        uses: actions/checkout@v3
+
+      - name: Download and edit Filter files
+        run: |
+          # Definition of the list of files to be processed
+          files=("sub-store-1.min.js" "sub-store-0.min.js" "cron-sync-artifacts.min.js")
+          # Get GMT+8 time update, formatted as MM/DD/YYYY HH:MM:SS.
+          update_time=$(TZ='Asia/Shanghai' date '+%m/%d/%Y %H:%M:%S')
+          for file in "${files[@]}"; do
+            echo "正在处理 ${file}..."
+            url="https://raw.githubusercontent.com/sub-store-org/Sub-Store/release/${file}"
+            {
+              echo "# Update Time: $update_time"
+            } > "$file"
+          done
+
+      - name: Commit and push updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Update Sub-Store Back-End"
+            git push
+          else
+            echo "No changes."
+          fi
