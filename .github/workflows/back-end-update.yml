@@ -10,7 +10,7 @@ jobs:
   update_filters:
     runs-on: ubuntu-latest
     steps:
-      - name: uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Download and edit Filter files
         run: |
