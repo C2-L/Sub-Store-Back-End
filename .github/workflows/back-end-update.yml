@@ -23,6 +23,7 @@ jobs:
             url="https://raw.githubusercontent.com/sub-store-org/Sub-Store/release/${file}"
             {
               echo "# Update Time: $update_time"
+              curl -sSL "$url"
             } > "$file"
           done
 
