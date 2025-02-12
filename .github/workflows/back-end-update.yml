@@ -1,4 +1,4 @@
-name: Sub-Store Back-End Update
+name: Back-End Update
 
 on:
   schedule:
