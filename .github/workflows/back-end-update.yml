@@ -10,8 +10,7 @@ jobs:
   update_filters:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the current repository code
-        uses: actions/checkout@v3
+      - name: uses: actions/checkout@v4
 
       - name: Download and edit Filter files
         run: |
